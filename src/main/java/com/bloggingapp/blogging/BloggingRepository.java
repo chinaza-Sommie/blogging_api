@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.repository.ListCrudRepository;
 
-public interface BloggingRepository extends ListCrudRepository<Posts, UUID>{
+public interface BloggingRepository extends ListCrudRepository<Posts, Long>{
 
     
 }

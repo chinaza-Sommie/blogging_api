@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class Posts {
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
     private String title;
     private String content;
     private String category;
@@ -39,7 +39,7 @@ public class Posts {
         this.updatedAt=updatedAt;
     }
 
-    public UUID getId(){
+    public Long getId(){
         return this.id;
     }
 

@@ -1,7 +1,7 @@
 package com.bloggingapp.blogging;
 
 import org.springframework.stereotype.Service;
-import java.util.UUID;
+// import java.util.Long;
 import java.util.List;
 
 @Service
@@ -17,15 +17,15 @@ public class BloggingService {
         return bloggingRepository.save(posts);
     }
 
-    public Posts updatePosts(UUID id, Posts posts){
+    public Posts updatePosts(Long id, Posts posts){
         return posts;
     }
 
-    public void deletePosts(UUID id){
+    public void deletePosts(Long id){
         bloggingRepository.deleteById(id);
     }
 
-    public Posts getPost(UUID id){
+    public Posts getPost(Long id){
         return bloggingRepository.findById(id).orElse(null);
     }
 
