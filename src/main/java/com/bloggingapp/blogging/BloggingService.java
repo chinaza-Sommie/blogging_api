@@ -17,7 +17,7 @@ public class BloggingService {
         return bloggingRepository.save(posts);
     }
 
-    public Posts updatePosts(Posts posts){
+    public Posts updatePosts(UUID id, Posts posts){
         return posts;
     }
 
