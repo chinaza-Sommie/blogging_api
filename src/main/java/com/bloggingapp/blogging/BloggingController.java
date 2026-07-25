@@ -2,6 +2,15 @@ package com.bloggingapp.blogging;
 
 import org.springframework.stereotype.Controller;
 import java.util.UUID;
+import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+
 
 @Controller
 public class BloggingController {
@@ -13,27 +22,33 @@ public class BloggingController {
         this.bloggingService = bloggingService;
         // this.bloggingRepository = bloggingRepository;
     }
-
-    public Posts createPosts(Posts posts){
+    
+    @PostMapping(value= "/posts", produces="application/json")
+    public Posts createPosts(@RequestBody Posts posts){
         return bloggingService.createPosts(posts);
     }
 
-    public Posts updatePosts(Posts post){
-        return bloggingService.updatePosts(post);
+    @PutMapping(value= "/posts/{id}", produces="application/json")
+    public Posts updatePosts(@PathVariable UUID id, @RequestBody Posts post){
+        return bloggingService.updatePosts(id, post);
     }
 
+    @DeleteMapping(value="/posts/{id}", produces="application/json")
     public void deletePosts(UUID id){
         bloggingService.deletePosts(id);
     }
 
+    @GetMapping(value="posts/{id}", produces="application/json")
     public void getPost(UUID id){
         bloggingService.getPost(id);
     }
 
-    public Posts getAllPosts(Posts posts){
+    @GetMapping(value="/posts", produces="application/json")
+    public List<Posts> getAllPosts(Posts posts){
         return bloggingService.getAllPosts();
     }
 
+    @GetMapping(value="/posts?term={filterWord}", produces="application/json")
     public Posts filterPosts(String filterWord){
         return bloggingService.filterPosts(filterWord);
     }
