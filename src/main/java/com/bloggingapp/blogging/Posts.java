@@ -1,7 +1,11 @@
 package com.bloggingapp.blogging;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -12,19 +16,21 @@ import jakarta.persistence.Table;
 public class Posts {
     @Id
     @GeneratedValue
-    private Long id;
+    private UUID id;
     private String title;
     private String content;
     private String category;
-    private String tags;
+
+    @ElementCollection
+    private List<String> tags;
     private Instant createdAt;
-    private String updatedAt;
+    private Instant updatedAt;
 
     public Posts(){
-        this("", "", "", "", Instant.now(), "");
+        this("", "", "", new ArrayList<>(), Instant.now(), Instant.now());
     }
 
-    public Posts(String title, String content, String category, String tags, Instant createdAt, String updatedAt){
+    public Posts(String title, String content, String category, List<String> tags, Instant createdAt, Instant updatedAt){
         this.title = title;
         this.content = content;
         this.category = category;
@@ -33,54 +39,54 @@ public class Posts {
         this.updatedAt=updatedAt;
     }
 
-    public Long getId(Long id){
+    public UUID getId(){
         return this.id;
     }
 
-    public String getTitle(String title){
+    public String getTitle(){
         return this.title;
     }
 
-    public String getContent(String content){
+    public String getContent(){
         return this.content;
     }
 
-    public String getCategory(String category){
+    public String getCategory(){
         return this.category;
     }
 
-    public String getTags(String tags){
+    public List<String> getTags(){
         return this.tags;
     }
 
-    public Instant getCreatedAt(Instant createdAt){
+    public Instant getCreatedAt(){
         return this.createdAt;
     }
 
-    public String getUpdatedAt(String updatedAt){
+    public Instant getUpdatedAt(){
         return this.updatedAt;
     }
-    public String setTitle(String title){
-        return this.title= title;
+    public void setTitle(String title){
+        this.title= title;
     }
 
-    public String setContent(String content){
-        return this.content = content;
+    public void setContent(String content){
+        this.content = content;
     }
 
-    public String setCategory(String category){
-        return this.category= category;
+    public void setCategory(String category){
+        this.category= category;
     }
 
-    public String setTags(String tags){
-        return this.tags= tags;
+    public void setTags(List<String> tags){
+        this.tags= tags;
     }
 
-    public Instant setCreatedAt(Instant createdAt){
-        return this.createdAt = createdAt;
+    public void setCreatedAt(Instant createdAt){
+        this.createdAt = createdAt;
     }
 
-    public String setUpdatedAt(String updatedAt){
-        return this.updatedAt = updatedAt;
+    public void setUpdatedAt(Instant updatedAt){
+        this.updatedAt = updatedAt;
     }
 }
