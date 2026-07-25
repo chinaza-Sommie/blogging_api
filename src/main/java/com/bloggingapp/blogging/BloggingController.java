@@ -2,6 +2,10 @@ package com.bloggingapp.blogging;
 
 import org.springframework.stereotype.Controller;
 import java.util.UUID;
+import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 public class BloggingController {
@@ -13,7 +17,8 @@ public class BloggingController {
         this.bloggingService = bloggingService;
         // this.bloggingRepository = bloggingRepository;
     }
-
+    
+    @PostMapping("/posts")
     public Posts createPosts(Posts posts){
         return bloggingService.createPosts(posts);
     }
@@ -30,7 +35,7 @@ public class BloggingController {
         bloggingService.getPost(id);
     }
 
-    public Posts getAllPosts(Posts posts){
+    public List<Posts> getAllPosts(Posts posts){
         return bloggingService.getAllPosts();
     }
 
