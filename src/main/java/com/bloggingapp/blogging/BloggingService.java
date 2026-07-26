@@ -1,7 +1,8 @@
 package com.bloggingapp.blogging;
 
 import org.springframework.stereotype.Service;
-import java.util.UUID;
+// import java.util.Long;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -17,15 +18,22 @@ public class BloggingService {
         return bloggingRepository.save(posts);
     }
 
-    public Posts updatePosts(UUID id, Posts posts){
-        return posts;
+    public Posts updatePosts(Long id, Posts posts){
+        Posts existingPost = bloggingRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found with id:" + id));
+
+        existingPost.setTitle(posts.getTitle());
+        existingPost.setContent(posts.getContent());
+        existingPost.setCategory(posts.getCategory());
+        existingPost.setTags(posts.getTags());
+
+        return bloggingRepository.save(existingPost);
     }
 
-    public void deletePosts(UUID id){
+    public void deletePosts(Long id){
         bloggingRepository.deleteById(id);
     }
 
-    public Posts getPost(UUID id){
+    public Posts getPost(Long id){
         return bloggingRepository.findById(id).orElse(null);
     }
 
@@ -33,8 +41,8 @@ public class BloggingService {
         return bloggingRepository.findAll();
     }
 
-    public Posts filterPosts(String filterWord){
+    public List<Posts> filterPosts(String filterWord){
         // return bloggingRepository.
-        return null;
+        return bloggingRepository.findByFilteredWord(filterWord);
     }
 }
