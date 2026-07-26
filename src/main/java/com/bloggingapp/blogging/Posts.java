@@ -8,14 +8,17 @@ import java.util.UUID;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="posts")
 public class Posts {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String content;
@@ -27,16 +30,25 @@ public class Posts {
     private Instant updatedAt;
 
     public Posts(){
-        this("", "", "", new ArrayList<>(), Instant.now(), Instant.now());
+        this("", "", "", new ArrayList<>());
     }
 
-    public Posts(String title, String content, String category, List<String> tags, Instant createdAt, Instant updatedAt){
+    public Posts(String title, String content, String category, List<String> tags){
         this.title = title;
         this.content = content;
         this.category = category;
         this.tags= tags;
-        this.createdAt=createdAt;
-        this.updatedAt=updatedAt;
+    }
+
+    @PrePersist
+    public void onCreate(){
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void onUpdate(){
+        this.updatedAt = Instant.now();
     }
 
     public Long getId(){
@@ -82,11 +94,11 @@ public class Posts {
         this.tags= tags;
     }
 
-    public void setCreatedAt(Instant createdAt){
-        this.createdAt = createdAt;
-    }
+    // public void setCreatedAt(Instant createdAt){
+    //     this.createdAt = createdAt;
+    // }
 
-    public void setUpdatedAt(Instant updatedAt){
-        this.updatedAt = updatedAt;
-    }
+    // public void setUpdatedAt(Instant updatedAt){
+    //     this.updatedAt = updatedAt;
+    // }
 }
